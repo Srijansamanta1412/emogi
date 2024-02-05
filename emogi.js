@@ -5,11 +5,67 @@ window.onload=function(e){
 }
 function loadWholeList(){
     console.log("Load Whole List")
-    let x=document.createElement('tr');
-    let y=document.createElement('td');
-    console.log(y)
-    y.innerText(emojiList[0].description)
-    x.appendChild(y);
+    let wholeTable=document.getElementById("emogiTable");
+    for(let i=0;i<emojiList.length;i++)
+    {
+      let x=document.createElement('tr');
+      let yEmogi=document.createElement('td');
+      yEmogi.innerText=emojiList[i].emoji
+      x.appendChild(yEmogi);
+      let yAliases=document.createElement('td');
+      yAliases.innerText=emojiList[i].aliases[0]
+      x.appendChild(yAliases);
+      let yDesc=document.createElement('td');
+      yDesc.innerText=emojiList[i].description
+      x.appendChild(yDesc);
+      wholeTable.appendChild(x)
+    }
+    
+   
+}
+let userInputDiv=document.getElementById('inputDiv')
+userInputDiv.addEventListener("keydown",function(e){
+      console.log("User Input Is Provided")
+      console.log(e)
+      console.log(e.target)
+      if(e.target.tagName=='INPUT')
+      {
+       console.log(e.target.value)
+       let inputValue=e.target.value
+       filteredListShow(inputValue);
+      }
+});
+function filteredListShow(inputValue)
+{
+      var newArray=[];
+      for(let i=0;i<emojiList.length;i++)
+      {
+        let desc=emojiList[i].description
+        let aliasesVal=emojiList[i].aliases[0];
+        console.log(desc.includes(inputValue))
+        if(desc.includes(inputValue) || aliasesVal.includes(inputValue))
+        {
+          newArray.push(emojiList[i]);
+        }
+      }
+      console.log(newArray)
+      let wholeTable=document.getElementById("emogiTable");
+      wholeTable.innerHTML=''
+    for(let i=0;i<newArray.length;i++)
+    {
+      let x=document.createElement('tr');
+      let yEmogi=document.createElement('td');
+      yEmogi.innerText=newArray[i].emoji
+      x.appendChild(yEmogi);
+      let yAliases=document.createElement('td');
+      yAliases.innerText=newArray[i].aliases[0]
+      x.appendChild(yAliases);
+      let yDesc=document.createElement('td');
+      yDesc.innerText=newArray[i].description
+      x.appendChild(yDesc);
+      wholeTable.appendChild(x)
+    }
+    
 }
 const emojiList = [
     {
